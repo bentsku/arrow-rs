@@ -197,7 +197,7 @@ mod tests {
     use super::*;
     use crate::tests::{
         copy_if_not_exists, get_opts, list_uses_directories_correctly, list_with_delimiter,
-        put_get_delete_list_opts, rename_and_copy, stream_get,
+        put_get_delete_list, rename_and_copy, stream_get,
     };
 
     #[tokio::test]
@@ -205,7 +205,7 @@ mod tests {
         crate::test_util::maybe_skip_integration!();
         let integration = MicrosoftAzureBuilder::from_env().build().unwrap();
 
-        put_get_delete_list_opts(&integration, false).await;
+        put_get_delete_list(&integration).await;
         get_opts(&integration).await;
         list_uses_directories_correctly(&integration).await;
         list_with_delimiter(&integration).await;

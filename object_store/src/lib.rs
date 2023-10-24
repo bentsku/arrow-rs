@@ -940,13 +940,7 @@ mod tests {
     use tokio::io::AsyncWriteExt;
 
     pub(crate) async fn put_get_delete_list(storage: &DynObjectStore) {
-        put_get_delete_list_opts(storage, false).await
-    }
 
-    pub(crate) async fn put_get_delete_list_opts(
-        storage: &DynObjectStore,
-        skip_list_with_spaces: bool,
-    ) {
         delete_fixtures(storage).await;
 
         let content_list = flatten_list_stream(storage, None).await.unwrap();
@@ -1170,12 +1164,10 @@ mod tests {
         storage.put(&path, Bytes::from(vec![0, 1])).await.unwrap();
         storage.head(&path).await.unwrap();
 
-        if !skip_list_with_spaces {
-            let files = flatten_list_stream(storage, Some(&Path::from("foo bar")))
-                .await
-                .unwrap();
-            assert_eq!(files, vec![path.clone()]);
-        }
+        let files = flatten_list_stream(storage, Some(&Path::from("foo bar")))
+            .await
+            .unwrap();
+        assert_eq!(files, vec![path.clone()]);
         storage.delete(&path).await.unwrap();
 
         let files = flatten_list_stream(storage, None).await.unwrap();
