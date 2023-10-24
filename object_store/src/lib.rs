@@ -940,7 +940,6 @@ mod tests {
     use tokio::io::AsyncWriteExt;
 
     pub(crate) async fn put_get_delete_list(storage: &DynObjectStore) {
-
         delete_fixtures(storage).await;
 
         let content_list = flatten_list_stream(storage, None).await.unwrap();
